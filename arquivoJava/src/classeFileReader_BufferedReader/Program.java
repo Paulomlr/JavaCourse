@@ -10,7 +10,7 @@ public class Program {
 
         String path = "src/classeFile/out.txt";
 
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){ // true significa que o arquivo no qual eu to referenciando, se ti tiver algo, não vair ser apagado mas sim escrito em baixo
            for (String line : lines){
                bw.write(line);
                bw.newLine();

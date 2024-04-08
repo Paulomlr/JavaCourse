@@ -1,26 +1,31 @@
 package classeFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
-        File file = new File("src/classeFile/in.txt");
-        Scanner sc = null;
-        try {
-            sc = new Scanner(file);
-            while(sc.hasNextLine()){
-                System.out.println(sc.nextLine());
-            }
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a folder path: ");
+        String strPath = sc.nextLine();  //example: /home/cliente/Documents/javaCodigos/arquivoJava
+
+        File path = new File(strPath);
+        File[] folders = path.listFiles(File::isDirectory);
+        System.out.println("FOLDERS: ");
+        for(File folder : folders){
+            System.out.println(folder); //imprimindo os diretorios
         }
-        catch (IOException e){
-            System.out.println("Error: " + e.getMessage());
+
+        File[] files = path.listFiles(File::isFile);
+        System.out.println("FILES: ");
+        for(File file : files){
+            System.out.println(file); //imprimindo os arquivos
         }
-        finally {
-            if (sc != null){
-                sc.close();
-            }
-        }
+
+        boolean success = new File(strPath + "\\subdir").mkdir();  //criando uma pasta no local srtPath
+        System.out.println("Directory created successfully " + success);
+
+        sc.close();
     }
 }
