@@ -1,40 +1,44 @@
 package application;
 
 import entities.Product;
+import entities.ProductPredicate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.Predicate;
 
 public class Program {
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
         List<Product> list = new ArrayList<>();
 
         list.add(new Product("TV", 900.00));
-        list.add(new Product("Notebook", 1200.00));
-        list.add(new Product("Tablet", 450.00));
+        list.add(new Product("Mouse", 50.00));
+        list.add(new Product("Tablet", 350.00));
+        list.add(new Product("HD Case", 80.90));
+
+        // list.removeIf(p -> p.getPrice() >= 100); // predicate
+
+        // list.removeIf(new ProductPredicate()); // referência para métodos
+
+        // list.removeIf(Product::staticProductPredicate); // referência para métodos/método estático
+
+        // list.removeIf(Product::nonStaticProductPredicate);  // método não estático
 
         /*
-        Comparator<Product> comp = new Comparator<Product>() {
-            @Override
-            public int compare(Product p1, Product p2) {
-                return p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
-            }
-        };
-
-        list.sort(new MyComparator());
-
-        Comparator<Product> comp = (p1, p2) -> {  FUNÇÃO ANÔNIMA
-            return p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
-        };
-
-        Comparator<Product> comp = Comparator.comparing(p -> p.getName().toUpperCase()); // FUNÇÃO ANÔNIMA = lambda
+        double min = 100.0;
+        Predicate<Product> pred = p -> p.getPrice() >= min;  // expressão lambda declarada
+        list.removeIf(pred);
         */
 
-        list.sort(Comparator.comparing(p -> p.getName().toUpperCase()));
+        double min = 100.0;
+        list.removeIf(p -> p.getPrice() >= min);
 
-        for (Product p : list){
+        for(Product p: list){
             System.out.println(p);
         }
+
     }
 }
