@@ -1,12 +1,13 @@
 package application;
 
-import entities.PriceUpdateConsumer;
 import entities.Product;
+import entities.UpperCaseName;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Program {
     public static void main(String[] args) {
@@ -18,20 +19,26 @@ public class Program {
         list.add(new Product("Tablet", 350.00));
         list.add(new Product("HD Case", 80.90));
 
-        // list.forEach(new PriceUpdateConsumer());
-        // list.forEach(Product::staticPriceUpdate);
-        // list.forEach(Product::nonStaticPriceUpdate);
+        /*
+
+        List<String> names = list.stream().map(new UpperCaseName()).collect(Collectors.toList());
+        // a função map só funciona para stream, então depois de converter para stream e usar o map, converter para lista usando collect.(Collectors.toList)
+        // função map: ela aplica uma função a cada elemento da strem gerando uma nova stream com os elementos transformados
+
+        */
+
+        // List<String> names = list.stream().map(Product::staticUpperCaseName).collect(Collectors.toList()); // método estático
+
+        // List<String> names = list.stream().map(Product::nonStaticUpperCaseName).toList(); // toList: um atalho para collect(Collectors.toList())
 
         /*
-        double factor = 1.1;
-        Consumer<Product> cons = p -> p.setPrice(p.getPrice() * factor);
-        list.forEach(cons);
-        */
-        
-        double factor = 1.1;
-        list.forEach(p -> p.setPrice(p.getPrice() * factor));
+        Function<Product, String> func = p -> p.getName().toUpperCase(); // expressão lambda declarada
 
-        list.forEach(System.out::println); // reference method
+        List<String> names = list.stream().map(func).toList();
+         */
+
+        List<String> names = list.stream().map(p -> p.getName().toUpperCase()).toList();
+        names.forEach(System.out::println);
 
     }
 }
