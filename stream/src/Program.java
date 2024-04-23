@@ -6,16 +6,17 @@ public class Program {
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(3, 4, 5, 10, 7);
 
-        Stream<Integer> st1 = list.stream().map(x -> x * 10);
-        System.out.println(Arrays.toString(st1.toArray()));
+        Stream<Integer> st1 = list.stream().map(x -> x * 10); // operação intermediária
+        System.out.println(Arrays.toString(st1.toArray())); // operação terminal
 
-        Stream<String> st2 = Stream.of("Maria", "Alex", "Bob");
-        System.out.println(Arrays.toString(st2.toArray()));
+        int sum = list.stream().reduce(0, Integer::sum); // ou (x, y) -> x + y
+        System.out.println("Sum = " + sum);
 
-        Stream<Integer> st3 = Stream.iterate(0, x -> x + 2);
-        System.out.println(Arrays.toString(st3.limit(10).toArray()));
+        List<Integer> newList = list.stream()
+                .filter(x -> x % 2 == 0) // filtrou os numeros que atendem a condição e gerou uma nova stream
+                .map(x -> x * 10)  // gerando uma nova stream
+                .toList();
 
-        Stream<Long> st4 = Stream.iterate(new Long[] {0L, 1L}, p -> new Long[] { p[1], p[0] + p[1] }).map(p -> p[0]); // fibonacci
-        System.out.println(Arrays.toString(st4.limit(20).toArray()));
+        System.out.println(Arrays.toString(newList.toArray()));
     }
 }
